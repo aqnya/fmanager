@@ -52,6 +52,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 Widget build(BuildContext context) {
   return DynamicColorBuilder(
     builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+    debugPrint("🌈 lightDynamic: $lightDynamic");
+    debugPrint("🌙 darkDynamic: $darkDynamic");
       final lightColorScheme = lightDynamic ?? _getColorScheme(Brightness.light);
       final darkColorScheme = darkDynamic ?? _getColorScheme(Brightness.dark);
       final useDark = _platformBrightness == Brightness.dark;
