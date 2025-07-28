@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'uname.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,12 +22,12 @@ class MyApp extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         return MaterialApp(
-          title: 'KernelSU', // 将标题更改为 KernelSU
+          title: 'KernelSU',
           theme: ThemeData(
             colorScheme: lightDynamic ?? fallbackLightColorScheme,
             useMaterial3: true,
             appBarTheme: AppBarTheme(
-              backgroundColor: lightDynamic?.surface ?? fallbackLightColorScheme.surface, // 使AppBar背景与页面背景色一致
+              backgroundColor: lightDynamic?.surface ?? fallbackLightColorScheme.surface,
               foregroundColor: lightDynamic?.onSurface ?? fallbackLightColorScheme.onSurface,
             ),
           ),
@@ -34,12 +35,12 @@ class MyApp extends StatelessWidget {
             colorScheme: darkDynamic ?? fallbackDarkColorScheme,
             useMaterial3: true,
             appBarTheme: AppBarTheme(
-              backgroundColor: darkDynamic?.surface ?? fallbackDarkColorScheme.surface, // 使AppBar背景与页面背景色一致
+              backgroundColor: darkDynamic?.surface ?? fallbackDarkColorScheme.surface,
               foregroundColor: darkDynamic?.onSurface ?? fallbackDarkColorScheme.onSurface,
             ),
           ),
           themeMode: ThemeMode.system,
-          home: const MyHomePage(title: 'KernelSU'), // 将标题更改为 KernelSU
+          home: const MyHomePage(title: 'KernelSU'),
         );
       },
     );
@@ -58,10 +59,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  // 我们将在Scaffold的body中直接构建主页内容，以匹配图片。
-  // _pages 列表现在只包含主页内容的单个条目。
-  static const List<Widget> _pages = <Widget>[
-    KernelSUHomePageContent(), // 为KernelSU屏幕创建的自定义小部件
+  final List<Widget> _pages = const [
+    KernelSUHomePageContent(),
     Center(child: Text('设置页面')),
   ];
 
@@ -92,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '主页', // 更改标签以匹配图片
+            label: '主页',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -104,9 +103,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-// KernelSU 主页内容的自定义小部件
-class KernelSUHomePageContent extends StatelessWidget {
+class KernelSUHomePageContent extends StatefulWidget {
   const KernelSUHomePageContent({super.key});
+
+  @override
+  State<KernelSUHomePageContent> createState() => _KernelSUHomePageContentState();
+}
+
+class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
+  String _kernelVersion = '加载中...';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadKernelVersion();
+  }
+
+  Future<void> _loadKernelVersion() async {
+    final version = await getKernelVersion();
+    setState(() {
+      _kernelVersion = version;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,9 +135,9 @@ class KernelSUHomePageContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 未安装状态卡片
+          // 未安装卡片
           Card(
-            color: colorScheme.errorContainer, // 用于警告的醒目颜色
+            color: colorScheme.errorContainer,
             margin: const EdgeInsets.only(bottom: 16.0),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -130,18 +148,15 @@ class KernelSUHomePageContent extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '未安装', // Not installed
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onErrorContainer),
-                      ),
+                      Text('未安装',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onErrorContainer)),
                       const SizedBox(height: 4),
-                      Text(
-                        '点击安装', // Click to install
-                        style: TextStyle(fontSize: 14, color: colorScheme.onErrorContainer),
-                      ),
+                      Text('点击安装',
+                          style: TextStyle(
+                              fontSize: 14, color: colorScheme.onErrorContainer)),
                     ],
                   ),
                 ],
@@ -159,7 +174,7 @@ class KernelSUHomePageContent extends StatelessWidget {
                 children: [
                   Text('内核版本', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),
-                  Text('5.15.167-android13-8-00014-gbf0a81a7f319-ab13297889'),
+                  Text(_kernelVersion),
                   const SizedBox(height: 16),
                   Text('管理器版本', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),
