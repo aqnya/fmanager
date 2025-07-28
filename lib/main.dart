@@ -118,12 +118,6 @@ final List<Widget> _pages = const [
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-  IconButton(
-    icon: const Icon(Icons.info_outline),
-    onPressed: () {
-      // TODO: 显示关于页
-    },
-  ),
   PopupMenuButton<String>(
     icon: const Icon(Icons.restart_alt), // 自定义图标
     tooltip: '重启选项',
@@ -163,14 +157,6 @@ final List<Widget> _pages = const [
         child: Text('重启到 EDL'),
       ),
     ],
-  ),
-  IconButton(
-    icon: const Icon(Icons.settings),
-    onPressed: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const SettingsPage()),
-      );
-    },
   ),
 ],
       ),
