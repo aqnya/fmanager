@@ -96,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          IconButton(icon: const Icon(Icons.download), onPressed: () {}),
           IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
           IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
         ],
