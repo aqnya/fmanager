@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 import 'status.dart';
 import 'card.dart';
 import 'settings.dart';
+import 'mcl.dart'
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final seedColor = await AccentColorFetcher.getAccentColor();
+  runApp(MyApp(seedColor));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final Color seedColor;
+  const MyApp(this.seedColor, {super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -20,11 +23,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Brightness _platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
-  final Color fallbackSeedColor = Colors.deepPurple;
-
   ColorScheme _getColorScheme(Brightness brightness) {
     return ColorScheme.fromSeed(
-      seedColor: fallbackSeedColor,
+      seedColor: widget.seedColor,
       brightness: brightness,
     );
   }
@@ -48,50 +49,43 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-@override
-Widget build(BuildContext context) {
-  return DynamicColorBuilder(
-    builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-    debugPrint("🌈 lightDynamic: $lightDynamic");
-    debugPrint("🌙 darkDynamic: $darkDynamic");
-      final lightColorScheme = lightDynamic ?? _getColorScheme(Brightness.light);
-      final darkColorScheme = darkDynamic ?? _getColorScheme(Brightness.dark);
-      final useDark = _platformBrightness == Brightness.dark;
+  @override
+  Widget build(BuildContext context) {
+    final lightColorScheme = _getColorScheme(Brightness.light);
+    final darkColorScheme = _getColorScheme(Brightness.dark);
+    final useDark = _platformBrightness == Brightness.dark;
 
-      return MaterialApp(
-        title: 'FMAC',
-        theme: ThemeData(
-          colorScheme: lightColorScheme,
-          useMaterial3: true,
-          appBarTheme: AppBarTheme(
-            backgroundColor: lightColorScheme.surface,
-            foregroundColor: lightColorScheme.onSurface,
-            systemOverlayStyle: SystemUiOverlayStyle(
-              systemNavigationBarColor: lightColorScheme.surface,
-              systemNavigationBarIconBrightness: Brightness.dark,
-            ),
+    return MaterialApp(
+      title: 'FMAC',
+      theme: ThemeData(
+        colorScheme: lightColorScheme,
+        useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          backgroundColor: lightColorScheme.surface,
+          foregroundColor: lightColorScheme.onSurface,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            systemNavigationBarColor: lightColorScheme.surface,
+            systemNavigationBarIconBrightness: Brightness.dark,
           ),
         ),
-        darkTheme: ThemeData(
-          colorScheme: darkColorScheme,
-          useMaterial3: true,
-          appBarTheme: AppBarTheme(
-            backgroundColor: darkColorScheme.surface,
-            foregroundColor: darkColorScheme.onSurface,
-            systemOverlayStyle: SystemUiOverlayStyle(
-              systemNavigationBarColor: darkColorScheme.surface,
-              systemNavigationBarIconBrightness: Brightness.light,
-            ),
+      ),
+      darkTheme: ThemeData(
+        colorScheme: darkColorScheme,
+        useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          backgroundColor: darkColorScheme.surface,
+          foregroundColor: darkColorScheme.onSurface,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            systemNavigationBarColor: darkColorScheme.surface,
+            systemNavigationBarIconBrightness: Brightness.light,
           ),
         ),
-        themeMode: useDark ? ThemeMode.dark : ThemeMode.light,
-        home: const MyHomePage(title: 'FMAC'),
-      );
-    },
-  );
+      ),
+      themeMode: useDark ? ThemeMode.dark : ThemeMode.light,
+      home: const MyHomePage(title: 'FMAC'),
+    );
+  }
 }
-}
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
