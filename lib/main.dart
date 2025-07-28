@@ -165,19 +165,22 @@ final List<Widget> _pages = [
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '主页',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '设置',
-          ),
-        ],
-      ),
+  currentIndex: _selectedIndex,
+  onTap: _onItemTapped,
+  backgroundColor: colorScheme.surfaceVariant,
+  selectedItemColor: colorScheme.primary,
+  unselectedItemColor: colorScheme.onSurfaceVariant,
+  items: const [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: '主页',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.settings),
+      label: '设置',
+    ),
+  ],
+),
     );
   }
 }
