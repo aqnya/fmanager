@@ -1,4 +1,4 @@
-name: Build manager
+name: Create manager
 on:
   workflow_dispatch:
 
@@ -21,6 +21,7 @@ jobs:
     - run: |
          cd $GITHUB_WORKSPACE/
          flutter create fmanager
+         cd $GITHUB_WORKSPACE/
          tar -cvf fmanager.tar fmanager
          
     - name: Upload project
