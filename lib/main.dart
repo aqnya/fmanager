@@ -99,8 +99,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-final List<Widget> _pages = const [
-  KernelSUHomePageContent(),
+final List<Widget> _pages = [
+  const KernelSUHomePageContent(),
   SettingsPage(),
 ];
 
@@ -291,9 +291,15 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
             children: [
               Text('了解如何安装 KernelSU 以及如何开发模块'),
             ],
-            onTap: () {
-              launchWebUrl('https://github.com/aqnya/fmanager');
-            },
+            onTap: () async {
+  try {
+    await launchWebUrl('https://github.com/aqnya/fmanager');
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('无法打开链接: $e')),
+    );
+  }
+},
           ),
         ],
       ),
