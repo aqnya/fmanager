@@ -24,28 +24,34 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        // 使用动态颜色或回退颜色
+        final lightColorScheme = lightDynamic ?? fallbackLightColorScheme;
+        final darkColorScheme = darkDynamic ?? fallbackDarkColorScheme;
+
         return MaterialApp(
           title: 'FMAC',
           theme: ThemeData(
-            colorScheme: lightDynamic ?? fallbackLightColorScheme,
+            colorScheme: lightColorScheme,
             useMaterial3: true,
             appBarTheme: AppBarTheme(
-              backgroundColor: lightDynamic?.surface ?? fallbackLightColorScheme.surface,
-              foregroundColor: lightDynamic?.onSurface ?? fallbackLightColorScheme.onSurface,
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                systemNavigationBarColor: Color(0xFFF2F7FB),
+              backgroundColor: lightColorScheme.surface,
+              foregroundColor: lightColorScheme.onSurface,
+              systemOverlayStyle: SystemUiOverlayStyle( // 移除 const
+                // 使用动态颜色
+                systemNavigationBarColor: lightColorScheme.surface,
                 systemNavigationBarIconBrightness: Brightness.dark,
               ),
             ),
           ),
           darkTheme: ThemeData(
-            colorScheme: darkDynamic ?? fallbackDarkColorScheme,
+            colorScheme: darkColorScheme,
             useMaterial3: true,
             appBarTheme: AppBarTheme(
-              backgroundColor: darkDynamic?.surface ?? fallbackDarkColorScheme.surface,
-              foregroundColor: darkDynamic?.onSurface ?? fallbackDarkColorScheme.onSurface,
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                systemNavigationBarColor: Colors.black,
+              backgroundColor: darkColorScheme.surface,
+              foregroundColor: darkColorScheme.onSurface,
+              systemOverlayStyle: SystemUiOverlayStyle( // 移除 const
+                // 使用动态颜色
+                systemNavigationBarColor: darkColorScheme.surface,
                 systemNavigationBarIconBrightness: Brightness.light,
               ),
             ),
@@ -57,6 +63,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
