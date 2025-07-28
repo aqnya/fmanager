@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'status.dart';
 import 'card.dart';
+import 'settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,10 +78,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [
-    KernelSUHomePageContent(),
-    Center(child: Text('设置页面')),
-  ];
+final List<Widget> _pages = const [
+  KernelSUHomePageContent(),
+  SettingsPage(),
+];
 
   void _onItemTapped(int index) {
     setState(() {
