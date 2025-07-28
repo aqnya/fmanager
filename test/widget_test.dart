@@ -13,8 +13,7 @@ import 'package:fmanager/main.dart';
 void main() {
   testWidgets('Bottom navigation switches pages', (WidgetTester tester) async {
     // 构建应用
-    await tester.pumpWidget(const MyApp());
-
+    await tester.pumpWidget(const MyApp(Colors.deepPurple));
     expect(find.text('未安装'), findsOneWidget);
 
 
