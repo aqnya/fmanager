@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 import 'status.dart';
 import 'card.dart';
 import 'settings.dart';
@@ -10,57 +9,78 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-   final Color fallbackSeedColor = Colors.deepPurple;
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-   final ColorScheme fallbackLightColorScheme =
-      ColorScheme.fromSeed(seedColor: fallbackSeedColor);
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  Brightness _platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
-  final ColorScheme fallbackDarkColorScheme =
-      ColorScheme.fromSeed(seedColor: fallbackSeedColor, brightness: Brightness.dark);
+  final Color fallbackSeedColor = Colors.deepPurple;
+
+  ColorScheme _getColorScheme(Brightness brightness) {
+    return ColorScheme.fromSeed(
+      seedColor: fallbackSeedColor,
+      brightness: brightness,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    setState(() {
+      _platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        // 使用动态颜色或回退颜色
-        final lightColorScheme = lightDynamic ?? fallbackLightColorScheme;
-        final darkColorScheme = darkDynamic ?? fallbackDarkColorScheme;
+    final lightScheme = _getColorScheme(Brightness.light);
+    final darkScheme = _getColorScheme(Brightness.dark);
+    final useDark = _platformBrightness == Brightness.dark;
 
-        return MaterialApp(
-          title: 'FMAC',
-          theme: ThemeData(
-            colorScheme: lightColorScheme,
-            useMaterial3: true,
-            appBarTheme: AppBarTheme(
-              backgroundColor: lightColorScheme.surface,
-              foregroundColor: lightColorScheme.onSurface,
-              systemOverlayStyle: SystemUiOverlayStyle( // 移除 const
-                // 使用动态颜色
-                systemNavigationBarColor: lightColorScheme.surface,
-                systemNavigationBarIconBrightness: Brightness.dark,
-              ),
-            ),
+    return MaterialApp(
+      title: 'FMAC',
+      theme: ThemeData(
+        colorScheme: lightScheme,
+        useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          backgroundColor: lightScheme.surface,
+          foregroundColor: lightScheme.onSurface,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            systemNavigationBarColor: lightScheme.surface,
+            systemNavigationBarIconBrightness: Brightness.dark,
           ),
-          darkTheme: ThemeData(
-            colorScheme: darkColorScheme,
-            useMaterial3: true,
-            appBarTheme: AppBarTheme(
-              backgroundColor: darkColorScheme.surface,
-              foregroundColor: darkColorScheme.onSurface,
-              systemOverlayStyle: SystemUiOverlayStyle( // 移除 const
-                // 使用动态颜色
-                systemNavigationBarColor: darkColorScheme.surface,
-                systemNavigationBarIconBrightness: Brightness.light,
-              ),
-            ),
+        ),
+      ),
+      darkTheme: ThemeData(
+        colorScheme: darkScheme,
+        useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          backgroundColor: darkScheme.surface,
+          foregroundColor: darkScheme.onSurface,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            systemNavigationBarColor: darkScheme.surface,
+            systemNavigationBarIconBrightness: Brightness.light,
           ),
-          themeMode: ThemeMode.system,
-          home: const MyHomePage(title: 'FMAC'),
-        );
-      },
+        ),
+      ),
+      themeMode: useDark ? ThemeMode.dark : ThemeMode.light,
+      home: const MyHomePage(title: 'FMAC'),
     );
   }
 }
