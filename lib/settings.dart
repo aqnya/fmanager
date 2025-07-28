@@ -10,11 +10,6 @@ class SettingsPage extends StatelessWidget {
 
     return ListView(
       children: [
-        const ListTile(
-          title: Text('设置'),
-          subtitle: Text('在此配置你的偏好'),
-        ),
-        const Divider(),
 
         ListTile(
           leading: const Icon(Icons.terminal),
@@ -29,7 +24,6 @@ class SettingsPage extends StatelessWidget {
           },
         ),
 
-        // 可添加更多设置项...
       ],
     );
   }
