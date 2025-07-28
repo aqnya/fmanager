@@ -18,12 +18,10 @@ jobs:
       with:
         flutter-version: 3.24.0
     - run: |
-          sudo apt-get update -y
-          sudo apt-get upgrade -y
           flutter pub get
           flutter test
           flutter build apk
-          flutter build appbundle
+   #       flutter build appbundle
          
     - name: Upload project
       uses: actions/upload-artifact@v4
