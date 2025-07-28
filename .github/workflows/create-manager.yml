@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: fmanager.tar
-        path: $GITHUB_WORKSPACE/fmanager.tar
+        path: ${{ github.workspace }}/fmanager.tar
