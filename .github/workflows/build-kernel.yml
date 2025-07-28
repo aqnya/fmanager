@@ -19,4 +19,12 @@ jobs:
         channel: stable
         flutter-version: 3.19.0
     - run: |
+         cd $GITHUB_WORKSPACE/
          flutter create fmanager
+         tar -cvf fmanager.tar fmanager
+         
+    - name: Upload project
+      uses: actions/upload-artifact@v4
+      with:
+        name: fmanager.tar
+        path: $GITHUB_WORKSPACE/fmanager.tar
