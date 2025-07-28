@@ -12,19 +12,17 @@ import 'package:fmanager/main.dart';
 
 void main() {
   testWidgets('Bottom navigation switches pages', (WidgetTester tester) async {
-    // Build the app and trigger a frame
+    // 构建应用
     await tester.pumpWidget(const MyApp());
 
-    // 验证初始显示为“首页内容”
-    expect(find.text('首页内容'), findsOneWidget);
+    expect(find.text('未安装'), findsOneWidget);
     expect(find.text('设置页面'), findsNothing);
 
-    // 点击“设置”按钮
-    await tester.tap(find.text('设置'));
-    await tester.pump();
 
-    // 验证现在显示的是“设置页面”
+    await tester.tap(find.text('设置'));
+    await tester.pumpAndSettle(); // 等待动画完成
+
     expect(find.text('设置页面'), findsOneWidget);
-    expect(find.text('首页内容'), findsNothing);
+    expect(find.text('未安装'), findsNothing);
   });
 }
