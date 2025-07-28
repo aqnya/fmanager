@@ -119,7 +119,10 @@ final List<Widget> _pages = const [
         title: Text(widget.title),
         actions: [
           IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.settings), onPressed: () {
+          Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const SettingsPage()),
+          }),
         ],
       ),
       body: IndexedStack(
