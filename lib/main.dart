@@ -72,37 +72,43 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+@override
+Widget build(BuildContext context) {
+  final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(icon: const Icon(Icons.download), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
-        ],
-      ),
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        selectedItemColor: colorScheme.primary,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '主页',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '设置',
-          ),
-        ],
-      ),
-    );
-  }
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(widget.title),
+      actions: [
+        IconButton(icon: const Icon(Icons.download), onPressed: () {}),
+        IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
+        IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
+      ],
+    ),
+    body: IndexedStack(
+      index: _selectedIndex,
+      children: const [
+        KernelSUHomePageContent(),
+        Center(child: Text('设置页面')),
+      ],
+    ),
+    bottomNavigationBar: BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      selectedItemColor: colorScheme.primary,
+      onTap: _onItemTapped,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: '主页',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: '设置',
+        ),
+      ],
+    ),
+  );
+}
 }
 
 class KernelSUHomePageContent extends StatefulWidget {
