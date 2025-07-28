@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'status.dart';
 import 'card.dart';
 import 'settings.dart';
-import 'mcl.dart'
+import 'mcl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
