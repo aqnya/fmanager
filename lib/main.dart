@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'status.dart';
@@ -31,6 +32,10 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               backgroundColor: lightDynamic?.surface ?? fallbackLightColorScheme.surface,
               foregroundColor: lightDynamic?.onSurface ?? fallbackLightColorScheme.onSurface,
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                systemNavigationBarColor: Color(0xFFF2F7FB),
+                systemNavigationBarIconBrightness: Brightness.dark,
+              ),
             ),
           ),
           darkTheme: ThemeData(
@@ -39,6 +44,10 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               backgroundColor: darkDynamic?.surface ?? fallbackDarkColorScheme.surface,
               foregroundColor: darkDynamic?.onSurface ?? fallbackDarkColorScheme.onSurface,
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                systemNavigationBarColor: Colors.black,
+                systemNavigationBarIconBrightness: Brightness.light,
+              ),
             ),
           ),
           themeMode: ThemeMode.system,
@@ -72,43 +81,40 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-@override
-Widget build(BuildContext context) {
-  final colorScheme = Theme.of(context).colorScheme;
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
 
-  return Scaffold(
-    appBar: AppBar(
-      title: Text(widget.title),
-      actions: [
-        IconButton(icon: const Icon(Icons.download), onPressed: () {}),
-        IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
-        IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
-      ],
-    ),
-    body: IndexedStack(
-      index: _selectedIndex,
-      children: const [
-        KernelSUHomePageContent(),
-        Center(child: Text('设置页面')),
-      ],
-    ),
-    bottomNavigationBar: BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      selectedItemColor: colorScheme.primary,
-      onTap: _onItemTapped,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: '主页',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: '设置',
-        ),
-      ],
-    ),
-  );
-}
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        actions: [
+          IconButton(icon: const Icon(Icons.download), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
+        ],
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        selectedItemColor: colorScheme.primary,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '主页',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: '设置',
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class KernelSUHomePageContent extends StatefulWidget {
@@ -121,7 +127,7 @@ class KernelSUHomePageContent extends StatefulWidget {
 class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
   String _kernelVersion = '加载中...';
   String _SELinuxStatus = 'Loading';
-  String _Fingerprint ='Loading';
+  String _Fingerprint = 'Loading';
 
   @override
   void initState() {
@@ -137,27 +143,27 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
       _kernelVersion = version;
     });
   }
-  
+
   Future<void> _getBuildFingerprint() async {
     final version = await getBuildFingerprint();
     setState(() {
       _Fingerprint = version;
     });
   }
-  
-    Future<void> _getSELinuxStatusFallback() async {
+
+  Future<void> _getSELinuxStatusFallback() async {
     final version = await getSELinuxStatusFallback();
     setState(() {
       _SELinuxStatus = version;
     });
   }
-  
+
   Future<void> launchWebUrl(String url) async {
-  final uri = Uri.parse(url);
-  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-    throw Exception('Can\'t open $url');
+    final uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Can\'t open $url');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -195,39 +201,35 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
               ),
             ),
           ),
-
-
-InfoCard(
-  title: '内核版本',
-  children: [
-    Text(_kernelVersion),
-    const SizedBox(height: 16),
-    Text('系统指纹', style: Theme.of(context).textTheme.titleMedium),
-    const SizedBox(height: 8),
-    Text(_Fingerprint),
-    const SizedBox(height: 16),
-    Text('SELinux 状态', style: Theme.of(context).textTheme.titleMedium),
-    const SizedBox(height: 8),
-    Text(_SELinuxStatus),
-  ],
-),
-
-InfoCard(
-  title: '支持开发',
-  children: [
-    Text('KernelSU 将保持免费开源，向开发者捐赠以表示支持。'),
-  ],
-),
-
-InfoCard(
-  title: '了解 KernelSU',
-  children: [
-    Text('了解如何安装 KernelSU 以及如何开发模块'),
-  ],
-  onTap: (){
-  launchWebUrl('https://github.com/aqnya/fmanager');
-  }
-),
+          InfoCard(
+            title: '内核版本',
+            children: [
+              Text(_kernelVersion),
+              const SizedBox(height: 16),
+              Text('系统指纹', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 8),
+              Text(_Fingerprint),
+              const SizedBox(height: 16),
+              Text('SELinux 状态', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 8),
+              Text(_SELinuxStatus),
+            ],
+          ),
+          InfoCard(
+            title: '支持开发',
+            children: [
+              Text('KernelSU 将保持免费开源，向开发者捐赠以表示支持。'),
+            ],
+          ),
+          InfoCard(
+            title: '了解 KernelSU',
+            children: [
+              Text('了解如何安装 KernelSU 以及如何开发模块'),
+            ],
+            onTap: () {
+              launchWebUrl('https://github.com/aqnya/fmanager');
+            },
+          ),
         ],
       ),
     );
