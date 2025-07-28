@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'uname.dart';
+import 'status.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         return MaterialApp(
-          title: 'KernelSU',
+          title: 'FMAC',
           theme: ThemeData(
             colorScheme: lightDynamic ?? fallbackLightColorScheme,
             useMaterial3: true,
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           themeMode: ThemeMode.system,
-          home: const MyHomePage(title: 'KernelSU'),
+          home: const MyHomePage(title: 'FMAC'),
         );
       },
     );
@@ -112,17 +112,26 @@ class KernelSUHomePageContent extends StatefulWidget {
 
 class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
   String _kernelVersion = '加载中...';
+  String _SELinuxStatus = 'Loading';
 
   @override
   void initState() {
     super.initState();
     _loadKernelVersion();
+    _getSELinuxStatusFallback();
   }
 
   Future<void> _loadKernelVersion() async {
     final version = await getKernelVersion();
     setState(() {
       _kernelVersion = version;
+    });
+  }
+  
+    Future<void> _getSELinuxStatusFallback() async {
+    final version = await getSELinuxStatusFallback();
+    setState(() {
+      _SELinuxStatus = version;
     });
   }
 
@@ -135,7 +144,6 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 未安装卡片
           Card(
             color: colorScheme.errorContainer,
             margin: const EdgeInsets.only(bottom: 16.0),
@@ -176,17 +184,14 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
                   const SizedBox(height: 8),
                   Text(_kernelVersion),
                   const SizedBox(height: 16),
-                  Text('管理器版本', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text('v1.0.5 (12081)'),
-                  const SizedBox(height: 16),
                   Text('系统指纹', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),
                   Text('redmi/vermeer/vermeer:15/AQ3A.240912.001/\nOS2.0.208.0.VNKNXNM:user/release-keys'),
                   const SizedBox(height: 16),
                   Text('SELinux 状态', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),
-                  Text('强制执行'),
+                  Text(_SELinuxStatus),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
