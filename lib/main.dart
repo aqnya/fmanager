@@ -132,7 +132,6 @@ final List<Widget> _pages = const [
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        selectedItemColor: null,
         onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
