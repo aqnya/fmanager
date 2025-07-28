@@ -121,7 +121,7 @@ final List<Widget> _pages = const [
           IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
           IconButton(icon: const Icon(Icons.settings), onPressed: () {
           Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const SettingsPage()),
+        MaterialPageRoute(builder: (context) => const SettingsPage());)
           }),
         ],
       ),
