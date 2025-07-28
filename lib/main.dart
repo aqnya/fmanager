@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'status.dart';
 import 'card.dart';
@@ -144,6 +145,13 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
       _SELinuxStatus = version;
     });
   }
+  
+  Future<void> launchWebUrl(String url) async {
+  final uri = Uri.parse(url);
+  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    throw Exception('Can\'t open $url');
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +190,7 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
             ),
           ),
 
-          // 信息卡片
+
 InfoCard(
   title: '内核版本',
   children: [
@@ -210,23 +218,10 @@ InfoCard(
   children: [
     Text('了解如何安装 KernelSU 以及如何开发模块'),
   ],
+  onTap(){
+  launchWebUrl('https://github.com/aqnya/fmanager');
+  }
 ),
-
-          // 了解更多卡片
-          Card(
-            margin: const EdgeInsets.only(bottom: 16.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('了解 KernelSU', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text('了解如何安装 KernelSU 以及如何开发模块'),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
