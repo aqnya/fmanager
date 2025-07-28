@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'status.dart';
+import 'card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -182,30 +183,34 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
           ),
 
           // 信息卡片
-          Card(
-            margin: const EdgeInsets.only(bottom: 16.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('内核版本', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text(_kernelVersion),
-                  const SizedBox(height: 16),
-                  Text('系统指纹', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text(_Fingerprint),
-                  const SizedBox(height: 16),
-                  Text('SELinux 状态', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text(_SELinuxStatus),
-                  const SizedBox(height: 16),
-                ],
-              ),
-            ),
-          ),
+InfoCard(
+  title: '内核版本',
+  children: [
+    Text(_kernelVersion),
+    const SizedBox(height: 16),
+    Text('系统指纹', style: Theme.of(context).textTheme.titleMedium),
+    const SizedBox(height: 8),
+    Text(_Fingerprint),
+    const SizedBox(height: 16),
+    Text('SELinux 状态', style: Theme.of(context).textTheme.titleMedium),
+    const SizedBox(height: 8),
+    Text(_SELinuxStatus),
+  ],
+),
 
+InfoCard(
+  title: '支持开发',
+  children: [
+    Text('KernelSU 将保持免费开源，向开发者捐赠以表示支持。'),
+  ],
+),
+
+InfoCard(
+  title: '了解 KernelSU',
+  children: [
+    Text('了解如何安装 KernelSU 以及如何开发模块'),
+  ],
+),
           // 支持开发卡片
           Card(
             margin: const EdgeInsets.only(bottom: 16.0),
