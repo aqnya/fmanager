@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'status.dart';
 import 'card.dart';
 import 'settings.dart';
@@ -47,42 +48,46 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final lightScheme = _getColorScheme(Brightness.light);
-    final darkScheme = _getColorScheme(Brightness.dark);
-    final useDark = _platformBrightness == Brightness.dark;
+@override
+Widget build(BuildContext context) {
+  return DynamicColorBuilder(
+    builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+      final lightColorScheme = lightDynamic ?? _getColorScheme(Brightness.light);
+      final darkColorScheme = darkDynamic ?? _getColorScheme(Brightness.dark);
+      final useDark = _platformBrightness == Brightness.dark;
 
-    return MaterialApp(
-      title: 'FMAC',
-      theme: ThemeData(
-        colorScheme: lightScheme,
-        useMaterial3: true,
-        appBarTheme: AppBarTheme(
-          backgroundColor: lightScheme.surface,
-          foregroundColor: lightScheme.onSurface,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            systemNavigationBarColor: lightScheme.surface,
-            systemNavigationBarIconBrightness: Brightness.dark,
+      return MaterialApp(
+        title: 'FMAC',
+        theme: ThemeData(
+          colorScheme: lightColorScheme,
+          useMaterial3: true,
+          appBarTheme: AppBarTheme(
+            backgroundColor: lightColorScheme.surface,
+            foregroundColor: lightColorScheme.onSurface,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              systemNavigationBarColor: lightColorScheme.surface,
+              systemNavigationBarIconBrightness: Brightness.dark,
+            ),
           ),
         ),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: darkScheme,
-        useMaterial3: true,
-        appBarTheme: AppBarTheme(
-          backgroundColor: darkScheme.surface,
-          foregroundColor: darkScheme.onSurface,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            systemNavigationBarColor: darkScheme.surface,
-            systemNavigationBarIconBrightness: Brightness.light,
+        darkTheme: ThemeData(
+          colorScheme: darkColorScheme,
+          useMaterial3: true,
+          appBarTheme: AppBarTheme(
+            backgroundColor: darkColorScheme.surface,
+            foregroundColor: darkColorScheme.onSurface,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              systemNavigationBarColor: darkColorScheme.surface,
+              systemNavigationBarIconBrightness: Brightness.light,
+            ),
           ),
         ),
-      ),
-      themeMode: useDark ? ThemeMode.dark : ThemeMode.light,
-      home: const MyHomePage(title: 'FMAC'),
-    );
-  }
+        themeMode: useDark ? ThemeMode.dark : ThemeMode.light,
+        home: const MyHomePage(title: 'FMAC'),
+      );
+    },
+  );
+}
 }
 
 
