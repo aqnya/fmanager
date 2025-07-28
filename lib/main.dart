@@ -218,7 +218,7 @@ InfoCard(
   children: [
     Text('了解如何安装 KernelSU 以及如何开发模块'),
   ],
-  onTap(){
+  onTap: (){
   launchWebUrl('https://github.com/aqnya/fmanager');
   }
 ),
