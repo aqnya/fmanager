@@ -13,12 +13,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static final Color fallbackSeedColor = Colors.deepPurple;
+   final Color fallbackSeedColor = Colors.deepPurple;
 
-  static final ColorScheme fallbackLightColorScheme =
+   final ColorScheme fallbackLightColorScheme =
       ColorScheme.fromSeed(seedColor: fallbackSeedColor);
 
-  static final ColorScheme fallbackDarkColorScheme =
+  final ColorScheme fallbackDarkColorScheme =
       ColorScheme.fromSeed(seedColor: fallbackSeedColor, brightness: Brightness.dark);
 
   @override
