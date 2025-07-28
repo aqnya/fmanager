@@ -211,21 +211,6 @@ InfoCard(
     Text('了解如何安装 KernelSU 以及如何开发模块'),
   ],
 ),
-          // 支持开发卡片
-          Card(
-            margin: const EdgeInsets.only(bottom: 16.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('支持开发', style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 8),
-                  Text('KernelSU 将保持免费开源，向开发者捐赠以表示支持。'),
-                ],
-              ),
-            ),
-          ),
 
           // 了解更多卡片
           Card(
