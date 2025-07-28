@@ -113,18 +113,27 @@ class KernelSUHomePageContent extends StatefulWidget {
 class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
   String _kernelVersion = '加载中...';
   String _SELinuxStatus = 'Loading';
+  String _Fingerprint ='Loading';
 
   @override
   void initState() {
     super.initState();
     _loadKernelVersion();
     _getSELinuxStatusFallback();
+    _getBuildFingerprint();
   }
 
   Future<void> _loadKernelVersion() async {
     final version = await getKernelVersion();
     setState(() {
       _kernelVersion = version;
+    });
+  }
+  
+  Future<void> _getBuildFingerprint() async {
+    final version = await getBuildFingerprint();
+    setState(() {
+      _Fingerprint = version;
     });
   }
   
@@ -186,7 +195,7 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
                   const SizedBox(height: 16),
                   Text('系统指纹', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),
-                  Text('redmi/vermeer/vermeer:15/AQ3A.240912.001/\nOS2.0.208.0.VNKNXNM:user/release-keys'),
+                  Text(_Fingerprint),
                   const SizedBox(height: 16),
                   Text('SELinux 状态', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 8),

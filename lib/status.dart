@@ -42,3 +42,16 @@ Future<String> getSELinuxStatusFallback() async {
     return '不支持或出错：$e';
   }
 }
+
+Future<String> getBuildFingerprint() async {
+  try {
+    final result = await Process.run('getprop', ['ro.build.fingerprint']);
+    if (result.exitCode == 0) {
+      return result.stdout.toString().trim();
+    } else {
+      return '获取失败: ${result.stderr}';
+    }
+  } catch (e) {
+    return '异常: $e';
+  }
+}
