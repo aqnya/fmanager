@@ -118,12 +118,61 @@ final List<Widget> _pages = const [
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.settings), onPressed: () {
-          Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const SettingsPage()),);
-          }),
-        ],
+  IconButton(
+    icon: const Icon(Icons.info_outline),
+    onPressed: () {
+      // TODO: 显示关于页
+    },
+  ),
+  PopupMenuButton<String>(
+    icon: const Icon(Icons.restart_alt), // 自定义图标
+    tooltip: '重启选项',
+    onSelected: (String value) {
+      switch (value) {
+        case 'reboot':
+          break;
+        case 'recovery':
+          break;
+        case 'bootloader':
+          break;
+        case 'download':
+          break;
+        case 'edl':
+          break;
+      }
+    },
+    itemBuilder: (BuildContext context) => const [
+      PopupMenuItem(
+        value: 'reboot',
+        child: Text('重启'),
+      ),
+      PopupMenuItem(
+        value: 'recovery',
+        child: Text('重启到 Recovery'),
+      ),
+      PopupMenuItem(
+        value: 'bootloader',
+        child: Text('重启到 BootLoader'),
+      ),
+      PopupMenuItem(
+        value: 'download',
+        child: Text('重启到 Download'),
+      ),
+      PopupMenuItem(
+        value: 'edl',
+        child: Text('重启到 EDL'),
+      ),
+    ],
+  ),
+  IconButton(
+    icon: const Icon(Icons.settings),
+    onPressed: () {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const SettingsPage()),
+      );
+    },
+  ),
+],
       ),
       body: IndexedStack(
         index: _selectedIndex,
