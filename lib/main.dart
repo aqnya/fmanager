@@ -100,10 +100,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    KernelSUHomePageContent(key: const PageStorageKey('home')),
-    SettingsPage(key: const PageStorageKey('settings')),
-  ];
+  final List<Widget Function()> _pageBuilders = [
+  () => const KernelSUHomePageContent(key: PageStorageKey('home')),
+  () => const SettingsPage(key: PageStorageKey('settings')),
+];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -165,9 +165,9 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
       child: KeyedSubtree(
-        key: ValueKey<int>(_selectedIndex),
-        child: _pages[_selectedIndex],
-      ),
+  key: ValueKey<int>(_selectedIndex),
+  child: _pageBuilders[_selectedIndex](),
+),
     ),
   ),
   bottomNavigationBar: BottomNavigationBar(
