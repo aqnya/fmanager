@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class LogcatPage extends StatefulWidget {
   const LogcatPage({super.key});
@@ -67,36 +68,39 @@ class _LogcatPageState extends State<LogcatPage> {
     _startLogcat();
   }
 
-  Future<void> _exportLogs() async {
-    if (_logLines.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('没有日志可导出')),
-      );
+Future<void> _exportLogs() async {
+  if (_logLines.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('没有日志可导出')),
+    );
+    return;
+  }
+
+  setState(() => _isExporting = true);
+
+  try {
+
+    final exportDir = await getExternalStorageDirectory();
+    if (!await exportDir.exists()) {
       return;
     }
 
-    setState(() => _isExporting = true);
-    
-    try {
-      // 获取应用文档目录
-      final directory = await getApplicationDocumentsDirectory();
-      final timestamp = DateTime.now().toIso8601String().replaceAll(RegExp(r'[:.]'), '-');
-      final file = File('${directory.path}/logcat_$timestamp.txt');
+    final timestamp = DateTime.now().toIso8601String().replaceAll(RegExp(r'[:.]'), '-');
+    final file = File('${exportDir.path}/logcat_$timestamp.txt');
 
-      // 写入日志文件
-      await file.writeAsString(_logLines.join('\n'));
-      
-      // 显示操作选项
-      await _showExportOptions(file);
-      
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('导出失败: $e')),
-      );
-    } finally {
-      setState(() => _isExporting = false);
-    }
+    // 写入日志
+    await file.writeAsString(_logLines.join('\n'));
+
+    // 弹出操作提示
+    await _showExportOptions(file);
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('导出失败: $e')),
+    );
+  } finally {
+    setState(() => _isExporting = false);
   }
+}
 
   Future<void> _showExportOptions(File file) async {
     return showDialog(
