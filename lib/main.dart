@@ -85,13 +85,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ),
       ),
       themeMode: useDark ? ThemeMode.dark : ThemeMode.light,
-      home: const MyHomePage(),
+      home: const MyHomePage(title: 'FMAC'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -117,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
   appBar: AppBar(
-    title: Text(_selectedIndex == 0 ? 'FMAC' : '设置'),
+    title: Text(widget.title),
     actions: [
       PopupMenuButton<String>(
         icon: const Icon(Icons.restart_alt),
