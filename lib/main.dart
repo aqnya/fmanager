@@ -286,13 +286,13 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
           InfoCard(
             title: '支持开发',
             children: [
-              Text('KernelSU 将保持免费开源，向开发者捐赠以表示支持。'),
+              Text('FMAC 将保持免费开源，向开发者捐赠以表示支持。'),
             ],
           ),
           InfoCard(
-            title: '了解 KernelSU',
+            title: '了解 FMAC',
             children: [
-              Text('了解如何安装 KernelSU 以及如何开发模块'),
+              Text('了解如何使用 FMAC'),
             ],
             onTap: () async {
   try {
