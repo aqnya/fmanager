@@ -161,23 +161,12 @@ final List<Widget> _pages = [
 ],
       ),
       body: AnimatedSwitcher(
-  duration: const Duration(milliseconds: 500),
+  duration: const Duration(milliseconds: 300),
   transitionBuilder: (Widget child, Animation<double> animation) {
-    // 使用 CurvedAnimation 实现非线性动画（如弹性效果）
-    final curvedAnimation = CurvedAnimation(
-      parent: animation,
-      curve: Curves.easeInOut, // 可换为 elasticOut、bounceInOut 等
-    );
-
+    // 使用淡入淡出效果
     return FadeTransition(
-      opacity: curvedAnimation,
-      child: SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(1.0, 0.0),
-          end: Offset.zero,
-        ).animate(curvedAnimation),
-        child: child,
-      ),
+      opacity: animation,
+      child: child,
     );
   },
   child: _pages[_selectedIndex],
