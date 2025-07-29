@@ -166,7 +166,7 @@ final List<Widget> _pages = [
     // 使用 CurvedAnimation 实现非线性动画（如弹性效果）
     final curvedAnimation = CurvedAnimation(
       parent: animation,
-      curve: Curves.easeInOutBack, // 可换为 elasticOut、bounceInOut 等
+      curve: Curves.easeInOut, // 可换为 elasticOut、bounceInOut 等
     );
 
     return FadeTransition(
