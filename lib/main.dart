@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
   body: PageStorage(
     bucket: PageStorageBucket(),
     child: AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 200),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeOut,
       // 使用 Stack 避免布局挤压
