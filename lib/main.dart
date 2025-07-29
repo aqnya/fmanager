@@ -23,7 +23,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  Brightness _platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+  Brightness _platformBrightness =
+      WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
   ColorScheme _getColorScheme(Brightness brightness) {
     return ColorScheme.fromSeed(
@@ -47,7 +48,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangePlatformBrightness() {
     setState(() {
-      _platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+      _platformBrightness =
+          WidgetsBinding.instance.platformDispatcher.platformBrightness;
     });
   }
 
@@ -101,10 +103,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-final List<Widget> _pages = [
-  const KernelSUHomePageContent(key: PageStorageKey('home')),
-  SettingsPage(key: const PageStorageKey('settings')),
-];
+  final List<Widget> _pages = [
+    const KernelSUHomePageContent(key: PageStorageKey('home')),
+    SettingsPage(key: const PageStorageKey('settings')),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -120,76 +122,60 @@ final List<Widget> _pages = [
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-  PopupMenuButton<String>(
-    icon: const Icon(Icons.restart_alt), // 自定义图标
-    tooltip: '重启选项',
-    onSelected: (String value) {
-      switch (value) {
-        case 'reboot':
-          break;
-        case 'recovery':
-          break;
-        case 'bootloader':
-          break;
-        case 'download':
-          break;
-        case 'edl':
-          break;
-      }
-    },
-    itemBuilder: (BuildContext context) => const [
-      PopupMenuItem(
-        value: 'reboot',
-        child: Text('重启'),
-      ),
-      PopupMenuItem(
-        value: 'recovery',
-        child: Text('重启到 Recovery'),
-      ),
-      PopupMenuItem(
-        value: 'bootloader',
-        child: Text('重启到 BootLoader'),
-      ),
-      PopupMenuItem(
-        value: 'download',
-        child: Text('重启到 Download'),
-      ),
-      PopupMenuItem(
-        value: 'edl',
-        child: Text('重启到 EDL'),
-      ),
-    ],
-  ),
-],
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.restart_alt), // 自定义图标
+            tooltip: '重启选项',
+            onSelected: (String value) {
+              switch (value) {
+                case 'reboot':
+                  break;
+                case 'recovery':
+                  break;
+                case 'bootloader':
+                  break;
+                case 'download':
+                  break;
+                case 'edl':
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) => const [
+              PopupMenuItem(value: 'reboot', child: Text('重启')),
+              PopupMenuItem(value: 'recovery', child: Text('重启到 Recovery')),
+              PopupMenuItem(value: 'bootloader', child: Text('重启到 BootLoader')),
+              PopupMenuItem(value: 'download', child: Text('重启到 Download')),
+              PopupMenuItem(value: 'edl', child: Text('重启到 EDL')),
+            ],
+          ),
+        ],
       ),
       body: PageTransitionSwitcher(
-  duration: const Duration(milliseconds: 300),
-  transitionBuilder: (Widget child, Animation<double> animation, Animation<double> secondaryAnimation) {
-    return FadeThroughTransition(
-      animation: animation,
-      secondaryAnimation: secondaryAnimation,
-      child: child,
-    );
-  },
-  child: _pages[_selectedIndex],
-),
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder:
+            (
+              Widget child,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) {
+              return FadeThroughTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+        child: _pages[_selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
-  currentIndex: _selectedIndex,
-  onTap: _onItemTapped,
-  backgroundColor: colorScheme.surfaceVariant,
-  selectedItemColor: colorScheme.primary,
-  unselectedItemColor: colorScheme.onSurfaceVariant,
-  items: const [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: '主页',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      label: '设置',
-    ),
-  ],
-),
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        backgroundColor: colorScheme.surfaceVariant,
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: colorScheme.onSurfaceVariant,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: '主页'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '设置'),
+        ],
+      ),
     );
   }
 }
@@ -198,7 +184,8 @@ class KernelSUHomePageContent extends StatefulWidget {
   const KernelSUHomePageContent({super.key});
 
   @override
-  State<KernelSUHomePageContent> createState() => _KernelSUHomePageContentState();
+  State<KernelSUHomePageContent> createState() =>
+      _KernelSUHomePageContentState();
 }
 
 class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
@@ -258,20 +245,30 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  Icon(Icons.warning_amber, color: colorScheme.onErrorContainer),
+                  Icon(
+                    Icons.warning_amber,
+                    color: colorScheme.onErrorContainer,
+                  ),
                   const SizedBox(width: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('未安装',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.onErrorContainer)),
+                      Text(
+                        '未安装',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onErrorContainer,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('点击安装',
-                          style: TextStyle(
-                              fontSize: 14, color: colorScheme.onErrorContainer)),
+                      Text(
+                        '点击安装',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: colorScheme.onErrorContainer,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -287,31 +284,30 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
               const SizedBox(height: 8),
               Text(_Fingerprint),
               const SizedBox(height: 16),
-              Text('SELinux 状态', style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                'SELinux 状态',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: 8),
               Text(_SELinuxStatus),
             ],
           ),
           InfoCard(
             title: '支持开发',
-            children: [
-              Text('FMAC 将保持免费开源，向开发者捐赠以表示支持。'),
-            ],
+            children: [Text('FMAC 将保持免费开源，向开发者捐赠以表示支持。')],
           ),
           InfoCard(
             title: '了解 FMAC',
-            children: [
-              Text('了解如何使用 FMAC'),
-            ],
+            children: [Text('了解如何使用 FMAC')],
             onTap: () async {
-  try {
-    await launchWebUrl('https://github.com/aqnya/fmanager');
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('无法打开链接: $e')),
-    );
-  }
-},
+              try {
+                await launchWebUrl('https://github.com/aqnya/fmanager');
+              } catch (e) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('无法打开链接: $e')));
+              }
+            },
           ),
         ],
       ),
