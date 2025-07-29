@@ -155,19 +155,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: PageStorage(
   bucket: PageStorageBucket(),
-  child: AnimatedSwitcher(
+  child: AnimatedSwitcher.withLayout(
     duration: const Duration(milliseconds: 500),
     switchInCurve: Curves.easeIn,
     switchOutCurve: Curves.easeOut,
-    transitionBuilder: (Widget child, Animation<double> animation) {
-      return FadeTransition(
-        opacity: animation,
-        child: child,
-      );
-    },
-    child: _pages[_selectedIndex],
+    child: AnimatedOpacity(
+      key: ValueKey<int>(_selectedIndex),
+      duration: const Duration(milliseconds: 500),
+      opacity: 1.0,
+      child: _pages[_selectedIndex],
+    ),
   ),
-),
+)
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
