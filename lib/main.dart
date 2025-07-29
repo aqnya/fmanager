@@ -160,10 +160,28 @@ final List<Widget> _pages = [
   ),
 ],
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
+      body: AnimatedSwitcher(
+  duration: const Duration(milliseconds: 500),
+  transitionBuilder: (Widget child, Animation<double> animation) {
+    // 使用 CurvedAnimation 实现非线性动画（如弹性效果）
+    final curvedAnimation = CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeInOutBack, // 可换为 elasticOut、bounceInOut 等
+    );
+
+    return FadeTransition(
+      opacity: curvedAnimation,
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(1.0, 0.0),
+          end: Offset.zero,
+        ).animate(curvedAnimation),
+        child: child,
       ),
+    );
+  },
+  child: _pages[_selectedIndex],
+),
       bottomNavigationBar: BottomNavigationBar(
   currentIndex: _selectedIndex,
   onTap: _onItemTapped,
