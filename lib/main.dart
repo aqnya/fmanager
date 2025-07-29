@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:animations/animations.dart';
+
 import 'status.dart';
 import 'card.dart';
 import 'settings.dart';
@@ -160,12 +162,12 @@ final List<Widget> _pages = [
   ),
 ],
       ),
-      body: AnimatedSwitcher(
+      body: PageTransitionSwitcher(
   duration: const Duration(milliseconds: 300),
-  transitionBuilder: (Widget child, Animation<double> animation) {
-    // 使用淡入淡出效果
-    return FadeTransition(
-      opacity: animation,
+  transitionBuilder: (Widget child, Animation<double> animation, Animation<double> secondaryAnimation) {
+    return FadeThroughTransition(
+      animation: animation,
+      secondaryAnimation: secondaryAnimation,
       child: child,
     );
   },
