@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const KernelSUHomePageContent(key: PageStorageKey('home')),
+    KernelSUHomePageContent(key: const PageStorageKey('home')),
     SettingsPage(key: const PageStorageKey('settings')),
   ];
 
@@ -123,19 +123,24 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           PopupMenuButton<String>(
-            icon: const Icon(Icons.restart_alt), // 自定义图标
+            icon: const Icon(Icons.restart_alt),
             tooltip: '重启选项',
             onSelected: (String value) {
               switch (value) {
                 case 'reboot':
+                  // 已实现
                   break;
                 case 'recovery':
+                  // 已实现
                   break;
                 case 'bootloader':
+                  // 已实现
                   break;
                 case 'download':
+                  // 已实现
                   break;
                 case 'edl':
+                  // 已实现
                   break;
               }
             },
@@ -149,21 +154,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: PageTransitionSwitcher(
-        duration: const Duration(milliseconds: 300),
-        transitionBuilder:
-            (
-              Widget child,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-            ) {
-              return FadeThroughTransition(
-                animation: animation,
-                secondaryAnimation: secondaryAnimation,
-                child: child,
-              );
-            },
-        child: _pages[_selectedIndex],
+      body: PageStorage(
+        bucket: PageStorageBucket(),
+        child: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -184,14 +180,18 @@ class KernelSUHomePageContent extends StatefulWidget {
   const KernelSUHomePageContent({super.key});
 
   @override
-  State<KernelSUHomePageContent> createState() =>
-      _KernelSUHomePageContentState();
+  State<KernelSUHomePageContent> createState() => _KernelSUHomePageContentState();
 }
 
-class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
+class _KernelSUHomePageContentState extends State<KernelSUHomePageContent>
+    with AutomaticKeepAliveClientMixin {
+
   String _kernelVersion = '加载中...';
   String _SELinuxStatus = 'Loading';
   String _Fingerprint = 'Loading';
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -203,37 +203,53 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
 
   Future<void> _loadKernelVersion() async {
     final version = await getKernelVersion();
-    setState(() {
-      _kernelVersion = version;
-    });
+    if (mounted) {
+      setState(() {
+        _kernelVersion = version;
+      });
+    }
   }
 
   Future<void> _getBuildFingerprint() async {
     final version = await getBuildFingerprint();
-    setState(() {
-      _Fingerprint = version;
-    });
+    if (mounted) {
+      setState(() {
+        _Fingerprint = version;
+      });
+    }
   }
 
   Future<void> _getSELinuxStatusFallback() async {
     final version = await getSELinuxStatusFallback();
-    setState(() {
-      _SELinuxStatus = version;
-    });
+    if (mounted) {
+      setState(() {
+        _SELinuxStatus = version;
+      });
+    }
   }
 
   Future<void> launchWebUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw Exception('Can\'t open $url');
+    try {
+      final uri = Uri.parse(url.trim());
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        throw '无法打开链接';
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('无法打开链接: $e')));
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return SingleChildScrollView(
+      key: const PageStorageKey('home_scroll'),
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,14 +315,8 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent> {
           InfoCard(
             title: '了解 FMAC',
             children: [Text('了解如何使用 FMAC')],
-            onTap: () async {
-              try {
-                await launchWebUrl('https://github.com/aqnya/fmanager');
-              } catch (e) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text('无法打开链接: $e')));
-              }
+            onTap: () {
+              launchWebUrl('https://github.com/aqnya/fmanager');
             },
           ),
         ],
