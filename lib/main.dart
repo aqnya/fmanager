@@ -159,12 +159,13 @@ class _MyHomePageState extends State<MyHomePage> {
     duration: const Duration(milliseconds: 500),
     switchInCurve: Curves.easeIn,
     switchOutCurve: Curves.easeOut,
-    child: AnimatedOpacity(
-      key: ValueKey<int>(_selectedIndex),
-      duration: const Duration(milliseconds: 500),
-      opacity: 1.0,
-      child: _pages[_selectedIndex],
-    ),
+    transitionBuilder: (Widget child, Animation<double> animation) {
+      return FadeTransition(
+        opacity: animation,
+        child: child,
+      );
+    },
+    child: _pages[_selectedIndex],
   ),
 ),
       bottomNavigationBar: BottomNavigationBar(
