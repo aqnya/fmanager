@@ -81,7 +81,7 @@ Future<void> _exportLogs() async {
   try {
 
     final exportDir = await getExternalStorageDirectory();
-    if (!await exportDir.exists()) {
+    if (exportDir == null) {
       return;
     }
 
