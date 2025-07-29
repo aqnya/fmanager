@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           backgroundColor: lightColorScheme.surface,
           foregroundColor: lightColorScheme.onSurface,
           systemOverlayStyle: SystemUiOverlayStyle(
-            systemNavigationBarColor: lightColorScheme.surface,
+            systemNavigationBarColor: lightColorScheme.surfaceVariant,
             systemNavigationBarIconBrightness: Brightness.dark,
           ),
         ),
@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           backgroundColor: darkColorScheme.surface,
           foregroundColor: darkColorScheme.onSurface,
           systemOverlayStyle: SystemUiOverlayStyle(
-            systemNavigationBarColor: darkColorScheme.surface,
+            systemNavigationBarColor: darkColorScheme.surfaceVariant,
             systemNavigationBarIconBrightness: Brightness.light,
           ),
         ),
