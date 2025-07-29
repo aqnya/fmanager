@@ -19,6 +19,7 @@ jobs:
         flutter-version: 3.32.8
     - run: |
           flutter pub get
+          flutter pub run flutter_launcher_icons:main
           flutter test
           flutter build apk
    #       flutter build appbundle
