@@ -31,7 +31,6 @@ Future<String> getSELinuxStatusFallback() async {
           return '未知状态：$output';
       }
     } else {
-      // 权限被拒绝时默认返回 Enforcing
       if (error.contains('Permission denied') || output.contains('Permission denied')) {
         return 'Enforcing';
       } else {

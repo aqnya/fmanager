@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:animations/animations.dart';
 
 import 'status.dart';
 import 'card.dart';
@@ -119,62 +118,73 @@ class _MyHomePageState extends State<MyHomePage> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.restart_alt),
-            tooltip: '重启选项',
-            onSelected: (String value) {
-              switch (value) {
-                case 'reboot':
-                  // 已实现
-                  break;
-                case 'recovery':
-                  // 已实现
-                  break;
-                case 'bootloader':
-                  // 已实现
-                  break;
-                case 'download':
-                  // 已实现
-                  break;
-                case 'edl':
-                  // 已实现
-                  break;
-              }
-            },
-            itemBuilder: (BuildContext context) => const [
-              PopupMenuItem(value: 'reboot', child: Text('重启')),
-              PopupMenuItem(value: 'recovery', child: Text('重启到 Recovery')),
-              PopupMenuItem(value: 'bootloader', child: Text('重启到 BootLoader')),
-              PopupMenuItem(value: 'download', child: Text('重启到 Download')),
-              PopupMenuItem(value: 'edl', child: Text('重启到 EDL')),
-            ],
-          ),
+  appBar: AppBar(
+    title: Text(widget.title),
+    actions: [
+      PopupMenuButton<String>(
+        icon: const Icon(Icons.restart_alt),
+        tooltip: '重启选项',
+        onSelected: (String value) {
+          switch (value) {
+            case 'reboot':
+              break;
+            case 'recovery':
+              break;
+            case 'bootloader':
+              break;
+            case 'edl':
+              break;
+          }
+        },
+        itemBuilder: (BuildContext context) => const [
+          PopupMenuItem(value: 'reboot', child: Text('重启')),
+          PopupMenuItem(value: 'recovery', child: Text('重启到 Recovery')),
+          PopupMenuItem(value: 'bootloader', child: Text('重启到 BootLoader')),
+          PopupMenuItem(value: 'edl', child: Text('重启到 EDL')),
         ],
       ),
-      body: PageStorage(
-        bucket: PageStorageBucket(),
-        child: IndexedStack(
-          index: _selectedIndex,
-          children: _pages,
-        ),
+    ],
+  ),
+  body: PageStorage(
+    bucket: PageStorageBucket(),
+    child: AnimatedSwitcher(
+      duration: const Duration(milliseconds: 100),
+      switchInCurve: Curves.easeIn,
+      switchOutCurve: Curves.easeOut,
+      layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+        return Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            ...previousChildren,
+            if (currentChild != null) currentChild,
+          ],
+        );
+      },
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      child: KeyedSubtree(
+        key: ValueKey<int>(_selectedIndex),
+        child: _pages[_selectedIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        backgroundColor: colorScheme.surfaceVariant,
-        selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurfaceVariant,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: '主页'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '设置'),
-        ],
-      ),
-    );
-  }
-}
+    ),
+  ),
+  bottomNavigationBar: BottomNavigationBar(
+    currentIndex: _selectedIndex,
+    onTap: _onItemTapped,
+    backgroundColor: colorScheme.surfaceVariant,
+    selectedItemColor: colorScheme.primary,
+    unselectedItemColor: colorScheme.onSurfaceVariant,
+    items: const [
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: '主页'),
+      BottomNavigationBarItem(icon: Icon(Icons.settings), label: '设置'),
+    ],
+  ),
+);
+}}
 
 class KernelSUHomePageContent extends StatefulWidget {
   const KernelSUHomePageContent({super.key});

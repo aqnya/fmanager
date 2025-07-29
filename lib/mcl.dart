@@ -10,7 +10,7 @@ class AccentColorFetcher {
       return Color(colorValue);
     } catch (e) {
       debugPrint("Failed to get accent color: $e");
-      return Colors.deepPurple; // fallback
+      return Colors.deepPurple;
     }
   }
 }
