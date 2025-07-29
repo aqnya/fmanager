@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:animations/animations.dart';
 
 import 'status.dart';
 import 'card.dart';
@@ -155,12 +154,19 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: PageStorage(
-        bucket: PageStorageBucket(),
-        child: IndexedStack(
-          index: _selectedIndex,
-          children: _pages,
-        ),
-      ),
+  bucket: PageStorageBucket(),
+  child: AnimatedSwitcher(
+    duration: const Duration(milliseconds: 500),
+    switchInCurve: Curves.easeIn,
+    switchOutCurve: Curves.easeOut,
+    child: AnimatedOpacity(
+      key: ValueKey<int>(_selectedIndex),
+      duration: const Duration(milliseconds: 500),
+      opacity: 1.0,
+      child: _pages[_selectedIndex],
+    ),
+  ),
+),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
