@@ -127,19 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
         onSelected: (String value) {
           switch (value) {
             case 'reboot':
-              // 已实现
               break;
             case 'recovery':
-              // 已实现
               break;
             case 'bootloader':
-              // 已实现
-              break;
-            case 'download':
-              // 已实现
               break;
             case 'edl':
-              // 已实现
               break;
           }
         },
@@ -147,7 +140,6 @@ class _MyHomePageState extends State<MyHomePage> {
           PopupMenuItem(value: 'reboot', child: Text('重启')),
           PopupMenuItem(value: 'recovery', child: Text('重启到 Recovery')),
           PopupMenuItem(value: 'bootloader', child: Text('重启到 BootLoader')),
-          PopupMenuItem(value: 'download', child: Text('重启到 Download')),
           PopupMenuItem(value: 'edl', child: Text('重启到 EDL')),
         ],
       ),
@@ -156,10 +148,9 @@ class _MyHomePageState extends State<MyHomePage> {
   body: PageStorage(
     bucket: PageStorageBucket(),
     child: AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 100),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeOut,
-      // 使用 Stack 避免布局挤压
       layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
         return Stack(
           fit: StackFit.expand,
@@ -169,14 +160,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         );
       },
-      // 使用 FadeTransition 实现淡入淡出
       transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(
           opacity: animation,
           child: child,
         );
       },
-      // 关键：用 KeyedSubtree 包裹，确保 AnimatedSwitcher 正确识别
       child: KeyedSubtree(
         key: ValueKey<int>(_selectedIndex),
         child: _pages[_selectedIndex],

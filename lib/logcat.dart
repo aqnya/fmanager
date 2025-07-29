@@ -106,8 +106,8 @@ Future<void> _exportLogs() async {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('日志导出成功'),
-        content: const Text('请选择操作'),
+        title: const Text('导出日志'),
+        content: const Text('是否导出日志到默认路径？'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -161,7 +161,6 @@ Future<void> _exportLogs() async {
                   controller: _scrollController,
                   itemCount: _logLines.length,
                   itemBuilder: (context, index) {
-                    // 根据日志级别设置不同颜色
                     String line = _logLines[index];
                     Color textColor = colorScheme.onBackground;
                     
@@ -186,7 +185,6 @@ Future<void> _exportLogs() async {
                     );
                   },
                 ),
-      // 新增底部操作栏
       bottomNavigationBar: _logLines.isNotEmpty
           ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
