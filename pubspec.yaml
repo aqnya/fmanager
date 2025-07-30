@@ -56,9 +56,10 @@ dev_dependencies:
 
 flutter_launcher_icons:
   android: true
-  image_path: "assets/icon/icon.png"
-  remove_alpha: true
-  background_color: "#ffffff"
+  ios: true
+  image_path: "assets/icon.png"  # 原始图标文件（建议 1024x1024）
+  adaptive_icon_background: "#FFFFFF"  # 白色背景
+  adaptive_icon_foreground: "assets/icon.png"  # 前景图标文件（黑色几何图形）
 
 # The following section is specific to Flutter packages.
 flutter:
