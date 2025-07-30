@@ -28,12 +28,19 @@ class MainActivity: FlutterActivity() {
     }
 
     private fun getSystemAccentColor(): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val accent = getColor(android.R.color.system_accent1_500)
-            accent
+        val baseColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Get system accent color on Android 12+
+            getColor(android.R.color.system_accent1_500)
         } else {
-            // Android 11 及以下使用固定色
-            Color.parseColor("#6200EE") // 紫色
+            // Fallback color for older Android versions
+            Color.parseColor("#6200EE")
         }
+
+        // The ratio to blend with white. 0.0 is the original color, 1.0 is pure white.
+        // A value of 0.2-0.4 usually works well for a subtle lightening effect.
+        val lightenRatio = 0.6f
+
+        // Blend the base color with white to make it lighter
+        return ColorUtils.blendARGB(baseColor, Color.WHITE, lightenRatio)
     }
 }
