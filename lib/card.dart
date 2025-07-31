@@ -25,7 +25,7 @@ class InfoCard extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: colorScheme.primaryContainer)),
+                  ?.copyWith(color: colorScheme.primary)),
           const SizedBox(height: 8),
           ...children,
         ],
@@ -33,7 +33,7 @@ class InfoCard extends StatelessWidget {
     );
 
     return Card(
-      color: colorScheme.onPrimaryContainer,
+      color: colorScheme.onPrimary,
       margin: const EdgeInsets.only(bottom: 16.0),
       child: onTap != null
           ? InkWell(
