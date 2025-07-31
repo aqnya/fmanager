@@ -33,7 +33,7 @@ class InfoCard extends StatelessWidget {
     );
 
     return Card(
-      color: colorScheme.onSecondary,
+      color: colorScheme.secondaryContainer,
       margin: const EdgeInsets.only(bottom: 16.0),
       child: onTap != null
           ? InkWell(
