@@ -178,6 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
   backgroundColor: colorScheme.surfaceVariant,
   indicatorColor: colorScheme.primaryContainer,
   surfaceTintColor: Colors.transparent,
+  labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
   destinations: const [
     NavigationDestination(
       icon: Icon(Icons.home_outlined),
