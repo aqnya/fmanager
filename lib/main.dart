@@ -172,17 +172,25 @@ class _MyHomePageState extends State<MyHomePage> {
 ),
     ),
   ),
-  bottomNavigationBar: BottomNavigationBar(
-    currentIndex: _selectedIndex,
-    onTap: _onItemTapped,
-    backgroundColor: colorScheme.surfaceVariant,
-    selectedItemColor: colorScheme.primary,
-    unselectedItemColor: colorScheme.onSurfaceVariant,
-    items: const [
-      BottomNavigationBarItem(icon: Icon(Icons.home), label: '主页'),
-      BottomNavigationBarItem(icon: Icon(Icons.settings), label: '设置'),
-    ],
-  ),
+  bottomNavigationBar: NavigationBar(
+  selectedIndex: _selectedIndex,
+  onDestinationSelected: _onItemTapped,
+  backgroundColor: colorScheme.surfaceVariant,
+  indicatorColor: colorScheme.primaryContainer,
+  surfaceTintColor: Colors.transparent,
+  destinations: const [
+    NavigationDestination(
+      icon: Icon(Icons.home_outlined),
+      selectedIcon: Icon(Icons.home),
+      label: '主页',
+    ),
+    NavigationDestination(
+      icon: Icon(Icons.settings_outlined),
+      selectedIcon: Icon(Icons.settings),
+      label: '设置',
+    ),
+  ],
+),
 );
 }}
 
