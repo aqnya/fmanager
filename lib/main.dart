@@ -148,9 +148,10 @@ class _MyHomePageState extends State<MyHomePage> {
   body: PageStorage(
     bucket: PageStorageBucket(),
     child: AnimatedSwitcher(
-      duration: const Duration(milliseconds: 125),
+      duration: const Duration(milliseconds: 135),
       switchInCurve: Curves.easeIn,
       switchOutCurve: Curves.easeOut,
+      //Curves.fastOutSlowIn
       layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
         return Stack(
           fit: StackFit.expand,
@@ -160,12 +161,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         );
       },
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
+ transitionBuilder: (Widget child, Animation<double> animation) {
+  return FadeTransition(
+    opacity: animation,
+    child: SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0.05, 0),
+        end: Offset.zero,
+      ).animate(animation),
+      child: child,
+    ),
+  );
+},
       child: KeyedSubtree(
   key: ValueKey<int>(_selectedIndex),
   child: _pageBuilders[_selectedIndex](),
