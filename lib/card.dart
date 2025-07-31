@@ -25,7 +25,7 @@ class InfoCard extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: colorScheme.secondary)),
+                  ?.copyWith(color: colorScheme.onSecondaryContainer)),
           const SizedBox(height: 8),
           ...children,
         ],
