@@ -8,20 +8,11 @@ plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.lsplugin.apksign)
     id("kotlin-parcelize")
 }
 
 val managerVersionCode: Int by rootProject.extra
 val managerVersionName: String by rootProject.extra
-
-apksign {
-    storeFileProperty = "KEYSTORE_FILE"
-    storePasswordProperty = "KEYSTORE_PASSWORD"
-    keyAliasProperty = "KEY_ALIAS"
-    keyPasswordProperty = "KEY_PASSWORD"
-}
-
 
 
 android {
@@ -29,7 +20,7 @@ android {
     
     signingConfigs {
         getByName("debug") {
-            storeFile = file("${rootDir}/debug.keystore") // 确保该路径存在
+            storeFile = file("${rootDir}/debug.keystore")
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
