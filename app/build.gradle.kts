@@ -28,7 +28,7 @@ android {
     namespace = "me.aqnya.fmac"
     
     signingConfigs {
-        create("debug") {
+        getByName("debug") {
             storeFile = file("${rootDir}/debug.keystore") // 确保该路径存在
             storePassword = "android"
             keyAlias = "androiddebugkey"
