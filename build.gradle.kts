@@ -38,7 +38,7 @@ val managerVersionName by extra(getVersionName())
 
 fun getGitCommitCount(): Int {
     val out = ByteArrayOutputStream()
-    exec {
+    project.exec {
         commandLine("git", "rev-list", "--count", "HEAD")
         standardOutput = out
     }
@@ -47,7 +47,7 @@ fun getGitCommitCount(): Int {
 
 fun getGitDescribe(): String {
     val out = ByteArrayOutputStream()
-    exec {
+    project.exec {
         commandLine("git", "describe", "--tags", "--always")
         standardOutput = out
     }
