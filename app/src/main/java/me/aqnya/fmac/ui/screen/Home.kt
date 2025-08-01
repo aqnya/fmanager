@@ -286,10 +286,10 @@ private fun StatusCard(
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(Modifier.height(4.dp))
-                        Text(
+                     /*   Text(
                             text = stringResource(R.string.home_click_to_install),
                             style = MaterialTheme.typography.bodyMedium
-                        )
+                        )*/
                     }
                 }
 
