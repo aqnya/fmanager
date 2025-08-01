@@ -43,7 +43,7 @@ Color adjustLightness(Color color, double amount) {
     );
 
     return Card(
-      color: adjustLightness(colorScheme.surface,0.8),
+      color: adjustLightness(colorScheme.surface,0.1),
       margin: const EdgeInsets.only(bottom: 16.0),
       child: onTap != null
           ? InkWell(
