@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return ColorScheme.fromSeed(
       seedColor: widget.seedColor,
       brightness: brightness,
+      tone: 80,
     );
   }
 
