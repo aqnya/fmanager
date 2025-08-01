@@ -280,43 +280,9 @@ class _KernelSUHomePageContentState extends State<KernelSUHomePageContent>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Card(
-            color: colorScheme.errorContainer,
-            margin: const EdgeInsets.only(bottom: 16.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.warning_amber,
-                    color: colorScheme.onErrorContainer,
-                  ),
-                  const SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '未安装',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.onErrorContainer,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '点击安装',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: colorScheme.onErrorContainer,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          WarningCard(context, onTap: () {
+  launchWebUrl('https://github.com/aqnya/fmanager/releases');
+}),
           InfoCard(
             title: '内核版本',
             children: [

@@ -45,3 +45,53 @@ class InfoCard extends StatelessWidget {
     );
   }
 }
+
+
+Widget WarningCard(BuildContext context, {VoidCallback? onTap}) {
+  final colorScheme = Theme.of(context).colorScheme;
+
+  final content = Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Row(
+      children: [
+        Icon(
+          Icons.warning_amber,
+          color: colorScheme.onErrorContainer,
+        ),
+        const SizedBox(width: 16),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '未安装',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onErrorContainer,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '点击安装',
+              style: TextStyle(
+                fontSize: 14,
+                color: colorScheme.onErrorContainer,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  return Card(
+    color: colorScheme.errorContainer,
+    margin: const EdgeInsets.only(bottom: 16.0),
+    child: onTap != null
+        ? InkWell(
+            onTap: onTap,
+            child: content,
+          )
+        : content,
+  );
+}
