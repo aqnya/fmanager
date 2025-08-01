@@ -22,10 +22,23 @@ apksign {
     keyPasswordProperty = "KEY_PASSWORD"
 }
 
+signingConfigs {
+        create("debug") {
+            storeFile = file("${rootDir}/debug.keystore") // 确保该路径存在
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
+
 android {
     namespace = "me.aqnya.fmac"
 
     buildTypes {
+        debug{
+            signingConfig = signingConfigs.getByName("debug")
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
