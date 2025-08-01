@@ -28,11 +28,11 @@ jobs:
           } >> gradle.properties
           sed -i 's/org.gradle.configuration-cache=true//g' gradle.properties
           chmod +x gradlew
-          ./gradlew clean assembleDebug
+          ./gradlew clean assembleRelease
 
          
     - name: Upload project
       uses: actions/upload-artifact@v4
       with:
         name: fmanager.tar
-        path: app/build/outputs/apk/debug/*.apk
+        path: app/build/outputs/apk/release/*.apk
