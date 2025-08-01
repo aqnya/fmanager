@@ -22,7 +22,12 @@ apksign {
     keyPasswordProperty = "KEY_PASSWORD"
 }
 
-signingConfigs {
+
+
+android {
+    namespace = "me.aqnya.fmac"
+    
+    signingConfigs {
         create("debug") {
             storeFile = file("${rootDir}/debug.keystore") // 确保该路径存在
             storePassword = "android"
@@ -31,9 +36,6 @@ signingConfigs {
         }
     }
 
-
-android {
-    namespace = "me.aqnya.fmac"
 
     buildTypes {
         debug{
