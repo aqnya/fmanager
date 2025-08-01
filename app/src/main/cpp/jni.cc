@@ -129,7 +129,7 @@ Java_me_aqnya_fmac_Natives_getAppProfile(JNIEnv *env, jobject, jstring pkg, jint
 
     bool useDefaultProfile = !get_app_profile(key, &profile);
 
-    auto cls = env->FindClass("me/aqnya/fmac/Natives$Profile")
+    auto cls = env->FindClass("me/aqnya/fmac/Natives$Profile");
     auto constructor = env->GetMethodID(cls, "<init>", "()V");
     auto obj = env->NewObject(cls, constructor);
     auto keyField = env->GetFieldID(cls, "name", "Ljava/lang/String;");
@@ -208,7 +208,7 @@ Java_me_aqnya_fmac_Natives_getAppProfile(JNIEnv *env, jobject, jstring pkg, jint
 extern "C"
 JNIEXPORT jboolean JNICALL
 Java_me_aqnya_fmac_Natives_setAppProfile(JNIEnv *env, jobject clazz, jobject profile) {
-    auto cls = env->FindClass("me/aqnya/fmac/Natives$Profile")
+    auto cls = env->FindClass("me/aqnya/fmac/Natives$Profile");
 
     auto keyField = env->GetFieldID(cls, "name", "Ljava/lang/String;");
     auto currentUidField = env->GetFieldID(cls, "currentUid", "I");
