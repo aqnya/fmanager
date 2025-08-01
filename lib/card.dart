@@ -11,6 +11,16 @@ class InfoCard extends StatelessWidget {
     required this.children,
     this.onTap,
   });
+  
+  
+Color adjustLightness(Color color, double amount) {
+  assert(amount >= -1.0 && amount <= 1.0);
+  final hsl = HSLColor.fromColor(color);
+  final adjusted = hsl.withLightness(
+    (hsl.lightness + amount).clamp(0.0, 1.0),
+  );
+  return adjusted.toColor();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +35,7 @@ class InfoCard extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
-                  ?.copyWith(color: colorScheme.onSecondary)),
+                  ?.copyWith(color: colorScheme.onSurface)),
           const SizedBox(height: 8),
           ...children,
         ],
@@ -33,7 +43,7 @@ class InfoCard extends StatelessWidget {
     );
 
     return Card(
-      color: colorScheme.secondary,
+      color: adjustLightness(colorScheme.surface,0.8),
       margin: const EdgeInsets.only(bottom: 16.0),
       child: onTap != null
           ? InkWell(
