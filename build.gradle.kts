@@ -37,13 +37,17 @@ val managerVersionCode by extra(getVersionCode())
 val managerVersionName by extra(getVersionName())
 
 fun getGitCommitCount(): Int {
-    val process = Runtime.getRuntime().exec("git rev-list --count HEAD")
+    val process = ProcessBuilder("git", "rev-list", "--count", "HEAD")
+        .redirectErrorStream(true)
+        .start()
     val output = process.inputStream.bufferedReader().readText().trim()
     return output.toInt()
 }
 
 fun getGitDescribe(): String {
-    val process = Runtime.getRuntime().exec("git describe --tags --always")
+    val process = ProcessBuilder("git", "describe", "--tags", "--always")
+        .redirectErrorStream(true)
+        .start()
     return process.inputStream.bufferedReader().readText().trim()
 }
 
