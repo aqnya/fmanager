@@ -236,11 +236,6 @@ private fun StatusCard(
     ) {
         Row(modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                if (kernelVersion.isGKI()) {
-                    onClickInstall()
-                }
-            }
             .padding(24.dp), verticalAlignment = Alignment.CenterVertically) {
             when {
                 ksuVersion != null -> {
