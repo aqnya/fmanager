@@ -96,7 +96,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
             }
             val checkUpdate =
                 LocalContext.current.getSharedPreferences("settings", Context.MODE_PRIVATE)
-                    .getBoolean("check_update", true)
+                    .getBoolean("check_update", false)
             if (checkUpdate) {
                 UpdateCard()
             }
